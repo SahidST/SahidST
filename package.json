@@ -1,0 +1,27 @@
+{
+  "name": "debugswift-3d-nexus",
+  "version": "4.0.0",
+  "description": "DebugSwift 3D Interactive Portfolio - A world-class three.js powered web agency showcase",
+  "main": "index.html",
+  "scripts": {
+    "dev": "npx http-server -p 8080 -o",
+    "build": "echo 'Production build ready'",
+    "test": "echo 'Tests pending'"
+  },
+  "keywords": [
+    "threejs",
+    "3d",
+    "portfolio",
+    "web-agency",
+    "interactive"
+  ],
+  "author": "DebugSwift",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  },
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}

@@ -1,0 +1,627 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="DebugSwift - Elite web development agency specializing in high-performance websites, mobile apps, and 3D interactive experiences. Transform your digital presence with cutting-edge technology.">
+    <meta name="keywords" content="web development, mobile app development, 3D web experiences, performance optimization, SEO, UI/UX design, custom software">
+    <meta name="author" content="DebugSwift">
+
+    <!-- Open Graph / Social Media -->
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="DebugSwift - We Build Faster">
+    <meta property="og:description" content="Elite web development agency specializing in high-performance digital solutions">
+    <meta property="og:url" content="https://debugswift.com">
+
+    <title>DebugSwift - We Build Faster | Premium Web Development Agency</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+
+    <!-- Preload critical resources -->
+    <link rel="preconnect" href="https://cdn.jsdelivr.net">
+</head>
+<body class="overflow-hidden bg-[#05080f] text-gray-100 font-sans antialiased">
+
+    <!-- Loading Screen -->
+    <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#05080f]">
+        <div class="mb-8">
+            <div class="text-6xl font-bold text-[#00ff8a] tracking-wider animate-pulse">
+                <span class="inline-block">D</span><span class="inline-block">S</span>
+            </div>
+        </div>
+        <div class="text-[#00bfff] text-lg mb-4 tracking-wide">Compiling Nexus...</div>
+        <div class="w-64 h-1 bg-gray-800 rounded-full overflow-hidden">
+            <div id="loader-progress" class="h-full bg-gradient-to-r from-[#00bfff] to-[#00ff8a] transition-all duration-300" style="width: 0%"></div>
+        </div>
+    </div>
+
+    <!-- Three.js Canvas Container -->
+    <canvas id="webgl-canvas" class="fixed top-0 left-0 w-full h-full"></canvas>
+
+    <!-- HTML Overlay UI -->
+    <div id="ui-overlay" class="fixed inset-0 pointer-events-none z-10">
+
+        <!-- Hero Section -->
+        <section id="hero-section" class="flex flex-col items-center justify-center h-full opacity-0 transition-opacity duration-1000">
+            <h1 class="text-5xl md:text-7xl font-bold text-[#F0F0F0] mb-4 text-center tracking-tight">
+                DebugSwift: We Build Faster.
+            </h1>
+            <p class="text-xl md:text-2xl text-[#B0B0B0] text-center tracking-wide">
+                Explore our digital nexus.
+            </p>
+            <div class="mt-8 text-[#00bfff] text-sm animate-bounce">
+                ↓ Drag to orbit • Click nodes to explore ↓
+            </div>
+        </section>
+
+        <!-- Node Tooltip -->
+        <div id="node-tooltip" class="fixed pointer-events-none opacity-0 transition-opacity duration-200 px-4 py-2 bg-[#0a192f]/90 border border-[#00bfff]/30 rounded backdrop-blur-sm">
+            <span class="text-[#00bfff] font-semibold text-sm"></span>
+        </div>
+
+    </div>
+
+    <!-- Service Modals Container -->
+    <div id="modals-container" class="fixed inset-0 z-20 pointer-events-none">
+
+        <!-- Web Development Modal -->
+        <article id="modal-web-development" class="service-modal" data-service="web-development">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Web Development</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Custom websites built with modern technologies for optimal performance and user experience.
+                        We specialize in responsive, fast-loading sites that convert visitors into customers.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Modern frameworks (React, Vue, Next.js, Svelte)</li>
+                        <li>Server-side rendering & static site generation</li>
+                        <li>Progressive Web Apps (PWAs)</li>
+                        <li>E-commerce solutions (Shopify, WooCommerce, custom)</li>
+                        <li>Content Management Systems (Headless CMS)</li>
+                        <li>API development & integration</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Technologies We Use</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">React</span>
+                            <span class="tech-badge">Next.js</span>
+                            <span class="tech-badge">TypeScript</span>
+                            <span class="tech-badge">Node.js</span>
+                            <span class="tech-badge">Tailwind CSS</span>
+                            <span class="tech-badge">Three.js</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Mobile App Development Modal -->
+        <article id="modal-app-development" class="service-modal" data-service="app-development">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Mobile App Development</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        From concept to launch, we build beautiful, high-performance native and cross-platform
+                        mobile apps for iOS and Android. Your vision, our expertise.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Native iOS (Swift) & Android (Kotlin) development</li>
+                        <li>Cross-platform apps (React Native, Flutter)</li>
+                        <li>App Store optimization & deployment</li>
+                        <li>Push notifications & real-time features</li>
+                        <li>Offline-first architecture</li>
+                        <li>In-app purchases & monetization</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Platforms & Tools</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">React Native</span>
+                            <span class="tech-badge">Flutter</span>
+                            <span class="tech-badge">Swift</span>
+                            <span class="tech-badge">Kotlin</span>
+                            <span class="tech-badge">Firebase</span>
+                            <span class="tech-badge">Expo</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Desktop App Development Modal -->
+        <article id="modal-desktop-development" class="service-modal" data-service="desktop-development">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Desktop App Development</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Powerful, secure, and scalable desktop applications for Windows, macOS, and Linux.
+                        We bring your complex workflows to life with intuitive interfaces and robust performance.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Cross-platform desktop apps (Electron, Tauri)</li>
+                        <li>Native applications for each platform</li>
+                        <li>Database integration & data management</li>
+                        <li>Auto-update systems</li>
+                        <li>File system operations & system integration</li>
+                        <li>Performance-critical applications</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Technologies</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">Electron</span>
+                            <span class="tech-badge">Tauri</span>
+                            <span class="tech-badge">.NET</span>
+                            <span class="tech-badge">C++</span>
+                            <span class="tech-badge">Python</span>
+                            <span class="tech-badge">Qt</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Game Development Modal -->
+        <article id="modal-game-development" class="service-modal" data-service="game-development">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Game Development</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Engaging 2D & 3D games for web and mobile. We handle everything from prototyping and
+                        physics to final deployment. Turn your game concept into reality.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Browser-based games (WebGL, Three.js)</li>
+                        <li>Mobile games (Unity, Unreal Engine)</li>
+                        <li>Multiplayer & real-time networking</li>
+                        <li>Physics simulation & game mechanics</li>
+                        <li>Asset creation & optimization</li>
+                        <li>Monetization strategies</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Game Engines & Tools</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">Unity</span>
+                            <span class="tech-badge">Three.js</span>
+                            <span class="tech-badge">Phaser</span>
+                            <span class="tech-badge">PixiJS</span>
+                            <span class="tech-badge">Babylon.js</span>
+                            <span class="tech-badge">WebGL</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Performance & Core Web Vitals Modal -->
+        <article id="modal-performance" class="service-modal" data-service="performance">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Performance & Core Web Vitals</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Speed up your website with advanced optimization techniques. Improve your site's loading,
+                        interactivity, and visual stability metrics to boost SEO rankings and user satisfaction.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Core Web Vitals optimization (LCP, FID, CLS)</li>
+                        <li>Page speed improvements (90+ Lighthouse scores)</li>
+                        <li>Image & asset optimization</li>
+                        <li>Code splitting & lazy loading</li>
+                        <li>CDN setup & caching strategies</li>
+                        <li>Server-side rendering optimization</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Performance Metrics We Target</h3>
+                        <div class="grid grid-cols-2 gap-4 mt-4">
+                            <div class="bg-[#0a192f]/50 p-4 rounded border border-[#00bfff]/20">
+                                <div class="text-2xl font-bold text-[#00ff8a]">&lt;2.5s</div>
+                                <div class="text-sm">Largest Contentful Paint</div>
+                            </div>
+                            <div class="bg-[#0a192f]/50 p-4 rounded border border-[#00bfff]/20">
+                                <div class="text-2xl font-bold text-[#00ff8a]">&lt;100ms</div>
+                                <div class="text-sm">First Input Delay</div>
+                            </div>
+                            <div class="bg-[#0a192f]/50 p-4 rounded border border-[#00bfff]/20">
+                                <div class="text-2xl font-bold text-[#00ff8a]">&lt;0.1</div>
+                                <div class="text-sm">Cumulative Layout Shift</div>
+                            </div>
+                            <div class="bg-[#0a192f]/50 p-4 rounded border border-[#00bfff]/20">
+                                <div class="text-2xl font-bold text-[#00ff8a]">95+</div>
+                                <div class="text-sm">Lighthouse Score</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- SEO Optimization Modal -->
+        <article id="modal-seo" class="service-modal" data-service="seo">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">SEO Optimization</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Enhance your search engine rankings with proven SEO strategies. We implement technical SEO,
+                        content optimization, and link building to drive organic traffic and increase visibility.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Technical SEO audits & implementation</li>
+                        <li>On-page optimization (meta tags, headings, content)</li>
+                        <li>Schema markup & structured data</li>
+                        <li>Site architecture & internal linking</li>
+                        <li>Mobile-first indexing optimization</li>
+                        <li>Local SEO & Google Business Profile</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">SEO Services</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">Technical SEO</span>
+                            <span class="tech-badge">Content Strategy</span>
+                            <span class="tech-badge">Link Building</span>
+                            <span class="tech-badge">Analytics</span>
+                            <span class="tech-badge">Local SEO</span>
+                            <span class="tech-badge">Schema Markup</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- UI/UX Design Modal -->
+        <article id="modal-uiux-design" class="service-modal" data-service="uiux-design">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">UI/UX Design</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Beautiful, intuitive designs that convert visitors into customers. We create user-centered
+                        experiences that balance aesthetics with functionality and accessibility.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>User research & persona development</li>
+                        <li>Wireframing & prototyping</li>
+                        <li>Visual design & branding</li>
+                        <li>Responsive & mobile-first design</li>
+                        <li>Accessibility (WCAG 2.1 AA compliance)</li>
+                        <li>Design systems & component libraries</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Design Tools</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">Figma</span>
+                            <span class="tech-badge">Adobe XD</span>
+                            <span class="tech-badge">Sketch</span>
+                            <span class="tech-badge">InVision</span>
+                            <span class="tech-badge">Framer</span>
+                            <span class="tech-badge">Principle</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Security Modal -->
+        <article id="modal-security" class="service-modal" data-service="security">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Security</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <p class="text-lg leading-relaxed">
+                        Protect your website and applications with advanced security measures and regular updates.
+                        We implement industry best practices to safeguard your digital assets and user data.
+                    </p>
+                    <ul class="list-disc list-inside space-y-2 ml-4">
+                        <li>Security audits & penetration testing</li>
+                        <li>SSL/TLS certificate implementation</li>
+                        <li>OWASP Top 10 vulnerability prevention</li>
+                        <li>Authentication & authorization (OAuth, JWT)</li>
+                        <li>Data encryption & secure storage</li>
+                        <li>Regular security updates & monitoring</li>
+                    </ul>
+                    <div class="mt-6 pt-6 border-t border-gray-700">
+                        <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Security Measures</h3>
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-badge">SSL/TLS</span>
+                            <span class="tech-badge">OAuth 2.0</span>
+                            <span class="tech-badge">JWT</span>
+                            <span class="tech-badge">CORS</span>
+                            <span class="tech-badge">CSP</span>
+                            <span class="tech-badge">2FA</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Our Process Modal -->
+        <article id="modal-process" class="service-modal" data-service="process">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Our Process</h2>
+                <div class="text-[#B0B0B0] space-y-6">
+                    <p class="text-lg leading-relaxed">
+                        A streamlined, transparent development process that delivers results on time and on budget.
+                    </p>
+
+                    <div class="space-y-6">
+                        <div class="process-step">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#00bfff]/20 border-2 border-[#00bfff] flex items-center justify-center text-[#00bfff] font-bold">
+                                    1
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-semibold text-[#F0F0F0] mb-2">Discovery & Planning</h3>
+                                    <p>We dive deep into your business goals, target audience, and technical requirements to create a comprehensive project roadmap.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#00bfff]/20 border-2 border-[#00bfff] flex items-center justify-center text-[#00bfff] font-bold">
+                                    2
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-semibold text-[#F0F0F0] mb-2">Design & Prototyping</h3>
+                                    <p>Our designers create stunning mockups and interactive prototypes for your approval before any code is written.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#00bfff]/20 border-2 border-[#00bfff] flex items-center justify-center text-[#00bfff] font-bold">
+                                    3
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-semibold text-[#F0F0F0] mb-2">Development & Testing</h3>
+                                    <p>We build your project using industry best practices, with continuous testing and regular progress updates.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="process-step">
+                            <div class="flex items-start gap-4">
+                                <div class="flex-shrink-0 w-12 h-12 rounded-full bg-[#00bfff]/20 border-2 border-[#00bfff] flex items-center justify-center text-[#00bfff] font-bold">
+                                    4
+                                </div>
+                                <div class="flex-1">
+                                    <h3 class="text-xl font-semibold text-[#F0F0F0] mb-2">Launch & Support</h3>
+                                    <p>We deploy your project to production and provide ongoing support, maintenance, and optimization.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Portfolio Modal -->
+        <article id="modal-portfolio" class="service-modal" data-service="portfolio">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Portfolio & Testimonials</h2>
+                <div class="text-[#B0B0B0] space-y-6">
+                    <p class="text-lg leading-relaxed">
+                        Explore our work and see what our clients have to say about working with DebugSwift.
+                    </p>
+
+                    <!-- Portfolio Projects -->
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="portfolio-item bg-[#0a192f]/50 p-6 rounded-lg border border-[#00bfff]/20 hover:border-[#00bfff]/50 transition-all">
+                            <h3 class="text-xl font-semibold text-[#00bfff] mb-3">E-Commerce Platform</h3>
+                            <p class="mb-4">A high-performance Next.js e-commerce platform with real-time inventory management and advanced analytics.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-badge-small">Next.js</span>
+                                <span class="tech-badge-small">Stripe</span>
+                                <span class="tech-badge-small">PostgreSQL</span>
+                            </div>
+                            <blockquote class="border-l-4 border-[#00ff8a] pl-4 italic text-sm">
+                                "DebugSwift transformed our online presence. Sales increased by 300% in the first quarter!"
+                            </blockquote>
+                        </div>
+
+                        <div class="portfolio-item bg-[#0a192f]/50 p-6 rounded-lg border border-[#00bfff]/20 hover:border-[#00bfff]/50 transition-all">
+                            <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Real Estate Website</h3>
+                            <p class="mb-4">A stunning property listing site with 3D virtual tours, map integration, and advanced search filters.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-badge-small">React</span>
+                                <span class="tech-badge-small">Three.js</span>
+                                <span class="tech-badge-small">MongoDB</span>
+                            </div>
+                            <blockquote class="border-l-4 border-[#00ff8a] pl-4 italic text-sm">
+                                "The 3D tours feature is a game-changer. Our leads have doubled!"
+                            </blockquote>
+                        </div>
+
+                        <div class="portfolio-item bg-[#0a192f]/50 p-6 rounded-lg border border-[#00bfff]/20 hover:border-[#00bfff]/50 transition-all">
+                            <h3 class="text-xl font-semibold text-[#00bfff] mb-3">Fitness Tracking App</h3>
+                            <p class="mb-4">A cross-platform mobile app for fitness enthusiasts with workout tracking, nutrition planning, and social features.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-badge-small">React Native</span>
+                                <span class="tech-badge-small">Firebase</span>
+                                <span class="tech-badge-small">GraphQL</span>
+                            </div>
+                            <blockquote class="border-l-4 border-[#00ff8a] pl-4 italic text-sm">
+                                "Professional, fast, and incredibly responsive. Highly recommended!"
+                            </blockquote>
+                        </div>
+
+                        <div class="portfolio-item bg-[#0a192f]/50 p-6 rounded-lg border border-[#00bfff]/20 hover:border-[#00bfff]/50 transition-all">
+                            <h3 class="text-xl font-semibold text-[#00bfff] mb-3">SaaS Dashboard</h3>
+                            <p class="mb-4">A comprehensive analytics dashboard for B2B SaaS companies with real-time data visualization and reporting.</p>
+                            <div class="flex flex-wrap gap-2 mb-4">
+                                <span class="tech-badge-small">Vue.js</span>
+                                <span class="tech-badge-small">D3.js</span>
+                                <span class="tech-badge-small">Node.js</span>
+                            </div>
+                            <blockquote class="border-l-4 border-[#00ff8a] pl-4 italic text-sm">
+                                "DebugSwift delivered beyond our expectations. The dashboard is beautiful and blazing fast!"
+                            </blockquote>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Blog Modal -->
+        <article id="modal-blog" class="service-modal" data-service="blog">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Blog</h2>
+                <div class="text-[#B0B0B0] space-y-4">
+                    <div class="bg-[#0a192f]/50 p-8 rounded-lg border border-[#00bfff]/20 text-center">
+                        <div class="text-6xl mb-4">📝</div>
+                        <h3 class="text-2xl font-semibold text-[#00bfff] mb-3">Coming Soon</h3>
+                        <p class="text-lg">
+                            Stay tuned for expert insights on web development, performance optimization,
+                            3D web experiences, and digital strategy.
+                        </p>
+                        <div class="mt-6">
+                            <a href="#" class="inline-block px-6 py-3 bg-[#00bfff]/20 border border-[#00bfff] rounded hover:bg-[#00bfff]/30 transition-all pointer-events-auto">
+                                Subscribe to Newsletter
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+        <!-- Contact / Free Audit Modal -->
+        <article id="modal-contact" class="service-modal" data-service="contact">
+            <div class="modal-content">
+                <button class="modal-close pointer-events-auto" aria-label="Close modal">&times;</button>
+                <h2 class="text-4xl font-bold text-[#F0F0F0] mb-4">Get Your Free Website Audit</h2>
+                <div class="text-[#B0B0B0] space-y-6">
+                    <p class="text-lg leading-relaxed">
+                        Discover how your website performs and get actionable recommendations to improve speed,
+                        SEO, and user experience. Absolutely free, no strings attached.
+                    </p>
+
+                    <form id="audit-form" class="space-y-4 pointer-events-auto">
+                        <div>
+                            <label for="audit-name" class="block text-sm font-semibold text-[#F0F0F0] mb-2">Name *</label>
+                            <input
+                                type="text"
+                                id="audit-name"
+                                name="name"
+                                required
+                                class="w-full px-4 py-3 bg-[#0a192f]/50 border border-[#00bfff]/30 rounded focus:outline-none focus:border-[#00bfff] text-[#F0F0F0] transition-all"
+                                placeholder="Your name"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="audit-email" class="block text-sm font-semibold text-[#F0F0F0] mb-2">Email *</label>
+                            <input
+                                type="email"
+                                id="audit-email"
+                                name="email"
+                                required
+                                class="w-full px-4 py-3 bg-[#0a192f]/50 border border-[#00bfff]/30 rounded focus:outline-none focus:border-[#00bfff] text-[#F0F0F0] transition-all"
+                                placeholder="your@email.com"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="audit-website" class="block text-sm font-semibold text-[#F0F0F0] mb-2">Website URL *</label>
+                            <input
+                                type="url"
+                                id="audit-website"
+                                name="website"
+                                required
+                                class="w-full px-4 py-3 bg-[#0a192f]/50 border border-[#00bfff]/30 rounded focus:outline-none focus:border-[#00bfff] text-[#F0F0F0] transition-all"
+                                placeholder="https://yourwebsite.com"
+                            >
+                        </div>
+
+                        <div>
+                            <label for="audit-message" class="block text-sm font-semibold text-[#F0F0F0] mb-2">Message (Optional)</label>
+                            <textarea
+                                id="audit-message"
+                                name="message"
+                                rows="4"
+                                class="w-full px-4 py-3 bg-[#0a192f]/50 border border-[#00bfff]/30 rounded focus:outline-none focus:border-[#00bfff] text-[#F0F0F0] transition-all resize-none"
+                                placeholder="Tell us about your project or goals..."
+                            ></textarea>
+                        </div>
+
+                        <button
+                            type="submit"
+                            class="w-full px-6 py-4 bg-gradient-to-r from-[#00bfff] to-[#00ff8a] text-[#05080f] font-bold rounded hover:shadow-lg hover:shadow-[#00bfff]/50 transition-all transform hover:scale-105"
+                        >
+                            Get My Free Audit
+                        </button>
+                    </form>
+
+                    <div class="text-center pt-6 border-t border-gray-700">
+                        <p class="mb-4">Or schedule a call directly:</p>
+                        <a
+                            href="https://calendly.com/debugswift"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            class="inline-block px-6 py-3 bg-[#0a192f]/50 border border-[#00bfff] text-[#00bfff] rounded hover:bg-[#00bfff]/10 transition-all pointer-events-auto"
+                        >
+                            📅 Schedule a Call
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </article>
+
+    </div>
+
+    <!-- SEO Content (Hidden but crawlable) -->
+    <div class="hidden" aria-hidden="true">
+        <h2>About DebugSwift</h2>
+        <p>DebugSwift is a premium web development agency specializing in high-performance websites, mobile applications, and cutting-edge 3D web experiences. We serve clients worldwide with custom digital solutions.</p>
+
+        <h2>Our Services</h2>
+        <nav>
+            <ul>
+                <li><a href="/service/web-development">Web Development</a></li>
+                <li><a href="/service/app-development">Mobile App Development</a></li>
+                <li><a href="/service/desktop-development">Desktop App Development</a></li>
+                <li><a href="/service/game-development">Game Development</a></li>
+                <li><a href="/service/performance">Performance Optimization</a></li>
+                <li><a href="/service/seo">SEO Services</a></li>
+                <li><a href="/service/uiux-design">UI/UX Design</a></li>
+                <li><a href="/service/security">Security</a></li>
+                <li><a href="/service/process">Our Process</a></li>
+                <li><a href="/service/portfolio">Portfolio</a></li>
+                <li><a href="/service/blog">Blog</a></li>
+                <li><a href="/service/contact">Contact</a></li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Three.js and Dependencies -->
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://cdn.jsdelivr.net/npm/three@0.160.0/build/three.module.js",
+            "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.160.0/examples/jsm/"
+        }
+    }
+    </script>
+
+    <!-- GSAP for UI Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+
+    <!-- TWEEN.js for Camera Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tween.js/20.0.0/tween.umd.js"></script>
+
+    <!-- Main Application Scripts -->
+    <script type="module" src="js/main.js"></script>
+
+</body>
+</html>
