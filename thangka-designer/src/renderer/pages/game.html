@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thangka Canvas Designer</title>
+    <link rel="stylesheet" href="../styles/game.css">
+</head>
+<body>
+    <!-- Side Panel with Draggable Items -->
+    <aside class="side-panel" id="sidePanel">
+        <div class="panel-header">
+            <h3>Drag Elements</h3>
+            <button class="btn-toggle" onclick="togglePanel()">◀</button>
+        </div>
+
+        <div class="items-container" id="itemsContainer">
+            <!-- Items will be dynamically loaded -->
+        </div>
+    </aside>
+
+    <!-- Main Canvas Area -->
+    <main class="canvas-area">
+        <!-- Top Controls -->
+        <div class="top-controls">
+            <button class="btn-control" onclick="goHome()" title="Home">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control" onclick="undo()" title="Undo" id="undoBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M3 7v6h6"></path>
+                    <path d="M21 17a9 9 0 00-9-9 9 9 0 00-6 2.3L3 13"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control" onclick="redo()" title="Redo" id="redoBtn">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M21 7v6h-6"></path>
+                    <path d="M3 17a9 9 0 019-9 9 9 0 016 2.3l3 2.7"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control" onclick="clearCanvas()" title="Clear All">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="3 6 5 6 21 6"></polyline>
+                    <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                </svg>
+            </button>
+
+            <button class="btn-control btn-share" onclick="openShareModal()">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <circle cx="18" cy="5" r="3"></circle>
+                    <circle cx="6" cy="12" r="3"></circle>
+                    <circle cx="18" cy="19" r="3"></circle>
+                    <line x1="8.59" y1="13.51" x2="15.42" y2="17.49"></line>
+                    <line x1="15.41" y1="6.51" x2="8.59" y2="10.49"></line>
+                </svg>
+                Share
+            </button>
+        </div>
+
+        <!-- Konva Canvas Container -->
+        <div id="container" class="konva-container"></div>
+
+        <!-- Bottom Info Bar -->
+        <div class="bottom-info">
+            <div class="info-item">
+                <span>Touch Count: <strong id="touchCount">0</strong></span>
+            </div>
+            <div class="info-item">
+                <span>Objects: <strong id="objectCount">0</strong></span>
+            </div>
+            <div class="info-item">
+                <span id="gestureInfo">Tap to add objects</span>
+            </div>
+        </div>
+    </main>
+
+    <!-- Share Modal -->
+    <div id="shareModal" class="modal hidden">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeShareModal()">&times;</span>
+            <h2>Share Your Design</h2>
+
+            <div class="share-preview" id="sharePreview">
+                <!-- Canvas preview will be shown here -->
+            </div>
+
+            <div class="share-options">
+                <button class="btn-share-option whatsapp" onclick="shareWhatsApp()">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 0c-8.837 0-16 7.163-16 16 0 2.825 0.737 5.607 2.137 8.048l-2.137 7.952 7.933-2.127c2.42 1.37 5.173 2.127 8.067 2.127 8.837 0 16-7.163 16-16s-7.163-16-16-16zM16 29.467c-2.482 0-4.908-0.646-7.07-1.87l-0.507-0.292-4.713 1.262 1.262-4.669-0.292-0.508c-1.207-2.100-1.847-4.507-1.847-6.857 0-7.51 6.11-13.62 13.62-13.62s13.62 6.11 13.62 13.62c0 7.51-6.11 13.467-13.073 13.467z"/>
+                        <path d="M23.932 19.477c-0.27-0.135-1.589-0.786-1.838-0.878-0.248-0.091-0.429-0.135-0.61 0.135s-0.701 0.878-0.859 1.059c-0.158 0.18-0.316 0.203-0.586 0.068s-1.145-0.422-2.179-1.344c-0.806-0.719-1.351-1.607-1.509-1.877s-0.017-0.416 0.119-0.55c0.122-0.122 0.27-0.316 0.405-0.473s0.18-0.27 0.27-0.451c0.091-0.18 0.046-0.338-0.023-0.473s-0.61-1.472-0.836-2.015c-0.22-0.53-0.443-0.458-0.61-0.466-0.158-0.008-0.338-0.010-0.519-0.010s-0.473 0.067-0.721 0.338c-0.248 0.27-0.946 0.923-0.946 2.253s0.969 2.613 1.104 2.794c0.135 0.18 1.9 2.977 4.615 4.176 0.645 0.285 1.149 0.456 1.542 0.583 0.648 0.208 1.238 0.179 1.704 0.108 0.52-0.078 1.589-0.649 1.813-1.276s0.225-1.164 0.158-1.276c-0.068-0.113-0.248-0.18-0.519-0.315z"/>
+                    </svg>
+                    WhatsApp
+                </button>
+
+                <button class="btn-share-option facebook" onclick="shareFacebook()">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M16 0c-8.839 0-16 7.161-16 16s7.161 16 16 16 16-7.161 16-16-7.161-16-16-16zM20.107 9.321h-2.411c-0.304 0-0.643 0.402-0.643 0.937v1.741h3.054l-0.464 2.518h-2.589v7.554h-2.679v-7.554h-2.411v-2.518h2.411v-1.464c0-1.958 1.357-3.536 3.214-3.536h2.518v2.321z"/>
+                    </svg>
+                    Facebook
+                </button>
+
+                <button class="btn-share-option download" onclick="downloadImage()">
+                    <svg width="32" height="32" viewBox="0 0 32 32" fill="currentColor">
+                        <path d="M23 14l-7 7-7-7h4v-8h6v8h4zM15 22h2v-1h-2v1zM10 28h12v-5h-12v5z"/>
+                    </svg>
+                    Download
+                </button>
+            </div>
+
+            <!-- WhatsApp Form -->
+            <div id="whatsappForm" class="whatsapp-form hidden">
+                <h3>Send via WhatsApp</h3>
+                <div class="input-group">
+                    <input type="tel" id="phoneInput" placeholder="Enter phone number (e.g., 9876543210)" maxlength="15">
+                    <button class="btn-validate" onclick="validatePhone()">Check</button>
+                </div>
+                <div id="phoneStatus" class="phone-status"></div>
+                <button id="sendWhatsAppBtn" class="btn-send" onclick="sendWhatsApp()" disabled>
+                    Send Image
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay hidden">
+        <div class="spinner-large"></div>
+        <p id="loadingText">Processing...</p>
+    </div>
+
+    <!-- Konva.js Library -->
+    <script src="https://cdn.jsdelivr.net/npm/konva@9/konva.min.js"></script>
+
+    <!-- Application Scripts -->
+    <script src="../scripts/multitouch-manager.js"></script>
+    <script src="../scripts/game.js"></script>
+</body>
+</html>

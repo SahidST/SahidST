@@ -1,0 +1,41 @@
+# Dependencies
+node_modules/
+package-lock.json
+yarn.lock
+
+# WhatsApp Session Data
+.wwebjs_auth/
+.wwebjs_cache/
+
+# Uploaded Images
+uploads/
+*.png
+*.jpg
+*.jpeg
+
+# Build Output
+dist/
+out/
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Logs
+*.log
+npm-debug.log*
+logs/
+
+# Electron
+.electron/

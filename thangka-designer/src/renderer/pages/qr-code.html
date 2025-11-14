@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>WhatsApp Authentication</title>
+    <link rel="stylesheet" href="../styles/qr-code.css">
+</head>
+<body>
+    <div class="qr-container">
+        <div class="header">
+            <h1>Connect WhatsApp</h1>
+            <p class="subtitle">Scan the QR code with your phone to continue</p>
+        </div>
+
+        <!-- QR Code Display -->
+        <div id="qrSection" class="qr-section">
+            <div id="qrLoading" class="qr-loading">
+                <div class="spinner"></div>
+                <p>Initializing WhatsApp...</p>
+            </div>
+
+            <div id="qrDisplay" class="qr-display hidden">
+                <canvas id="qrCanvas"></canvas>
+                <div class="qr-timer">
+                    <p id="qrTimer">QR Code expires in: <span id="countdown">85</span>s</p>
+                </div>
+            </div>
+
+            <div id="qrError" class="qr-error hidden">
+                <div class="error-icon">⚠️</div>
+                <p id="errorMessage">Connection error. Please try again.</p>
+                <button class="btn-retry" onclick="retryConnection()">Retry</button>
+            </div>
+        </div>
+
+        <!-- Connection Status -->
+        <div id="connectionStatus" class="connection-status hidden">
+            <div class="status-icon success">✓</div>
+            <h2>Connected Successfully!</h2>
+            <p class="phone-number">Phone: <strong id="phoneNumber">+91XXXXXXXXXX</strong></p>
+            <button class="btn-primary" onclick="startApp()">Start Application</button>
+            <button class="btn-secondary" onclick="logout()">Disconnect</button>
+        </div>
+
+        <!-- Instructions -->
+        <div id="instructions" class="instructions">
+            <h3>How to Scan:</h3>
+            <ol>
+                <li>Open WhatsApp on your phone</li>
+                <li>Tap <strong>Menu</strong> or <strong>Settings</strong></li>
+                <li>Select <strong>Linked Devices</strong></li>
+                <li>Tap <strong>Link a Device</strong></li>
+                <li>Point your phone at the QR code</li>
+            </ol>
+        </div>
+
+        <!-- Connection Info -->
+        <div class="connection-info">
+            <div class="info-badge" id="statusBadge">
+                <span class="status-dot"></span>
+                <span id="statusText">Connecting...</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- QR Code Library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcode@1.5.3/build/qrcode.min.js"></script>
+    <script src="../scripts/qr-code.js"></script>
+</body>
+</html>

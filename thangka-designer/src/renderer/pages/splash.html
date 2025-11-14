@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thangka Designer - Loading</title>
+    <link rel="stylesheet" href="../styles/splash.css">
+</head>
+<body>
+    <div class="splash-container">
+        <div class="logo-wrapper">
+            <div class="logo-placeholder">
+                <svg width="200" height="200" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <!-- Decorative Thangka-inspired logo -->
+                    <circle cx="100" cy="100" r="80" stroke="#D4AF37" stroke-width="3" fill="none"/>
+                    <circle cx="100" cy="100" r="60" stroke="#D4AF37" stroke-width="2" fill="none" opacity="0.7"/>
+                    <path d="M100 40 L120 80 L160 80 L130 105 L145 145 L100 120 L55 145 L70 105 L40 80 L80 80 Z"
+                          fill="#D4AF37" opacity="0.9"/>
+                    <circle cx="100" cy="100" r="15" fill="#D4AF37"/>
+                </svg>
+            </div>
+            <h1 class="app-title">Thangka Designer</h1>
+            <p class="app-subtitle">Interactive Canvas Experience</p>
+        </div>
+
+        <div class="loading-wrapper">
+            <div class="loading-bar">
+                <div class="loading-progress" id="loadingProgress"></div>
+            </div>
+            <p class="loading-text" id="loadingText">Initializing Application...</p>
+            <p class="loading-percent" id="loadingPercent">0%</p>
+        </div>
+
+        <div class="branding">
+            <p>Powered by <strong>IKnowHow</strong></p>
+        </div>
+    </div>
+
+    <script src="../scripts/splash.js"></script>
+</body>
+</html>
