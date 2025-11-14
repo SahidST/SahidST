@@ -45,14 +45,14 @@ export class ServiceNodes {
             },
             {
                 id: 'performance',
-                name: 'Performance & Core Web Vitals',
+                name: 'Digital Marketing',
                 geometry: 'torus',
                 color: 0x00bfff,
                 orbit: { radius: 17, speed: 0.35, offset: 2 * Math.PI / 3, tilt: -0.3 }
             },
             {
                 id: 'seo',
-                name: 'SEO Optimization',
+                name: 'SEO Services',
                 geometry: 'cone',
                 color: 0x00bfff,
                 orbit: { radius: 22, speed: 0.27, offset: 5 * Math.PI / 6, tilt: 0.1 }
@@ -94,7 +94,7 @@ export class ServiceNodes {
             },
             {
                 id: 'contact',
-                name: 'Free Audit / Contact',
+                name: 'Get a Free Quote',
                 geometry: 'octahedron',
                 color: 0x00ff8a, // Neon Green for CTA
                 size: 1.5,
